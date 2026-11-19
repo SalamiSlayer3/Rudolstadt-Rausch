@@ -85,8 +85,43 @@ ol{margin:0;padding:0;list-style:none;font-size:19px;line-height:1.6}
 #ab.rd{animation:abp 1.2s ease-in-out infinite}@keyframes abp{50%{transform:scale(1.06)}}
 #ab:disabled{opacity:.55;animation:none}
 #lb{background:rgba(6,10,8,.95)}
-.slot{display:flex;gap:8px;padding:14px 16px;border-radius:18px;background:linear-gradient(#b3262c,#7a1519);border:4px solid #f2b632;animation:pop .5s ease-out;box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.slot span{display:block;width:64px;height:76px;line-height:76px;font-size:44px;background:#fff;border-radius:10px;color:#000}
+/* Spielautomat */
+.sm{position:relative;margin-right:26px;padding:12px 16px 14px;border-radius:24px;background:linear-gradient(180deg,#e0353b,#8a1a1e 70%,#5e0f12);border:4px solid #ffc23d;box-shadow:0 0 0 4px #4a0a0c,0 14px 40px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.35);animation:pop .55s cubic-bezier(.2,1.5,.4,1) both;transition:filter 1s,transform 1s}
+.sm:before{content:"";position:absolute;inset:5px;border-radius:18px;border:3px dotted #fff3b0;opacity:.85;pointer-events:none;animation:blink .45s steps(2) infinite}
+.sm.spin:before{animation-duration:.12s}
+@keyframes blink{50%{border-color:#ff4fa3}}
+.smt{font-size:18px;color:#fff3c4;text-shadow:0 2px 0 #4a0a0c;margin:2px 0 9px;letter-spacing:1.5px}
+.slot{display:flex;gap:7px;padding:9px;border-radius:14px;background:#2a0608;box-shadow:inset 0 4px 12px rgba(0,0,0,.8)}
+.slot span{display:block;width:66px;height:80px;line-height:80px;font-size:46px;background:linear-gradient(180deg,#d8d8d8,#fff 30%,#fff 70%,#d0d0d0);border-radius:9px;color:#000;overflow:hidden;transition:background .3s,box-shadow .3s}
+.slot span.spin{animation:reel .1s linear infinite;filter:blur(1.4px)}
+@keyframes reel{from{transform:translateY(-22%)}to{transform:translateY(22%)}}
+.slot span.stop{animation:land .38s cubic-bezier(.2,1.7,.4,1)}
+@keyframes land{from{transform:translateY(-45%)}to{transform:none}}
+.slot span.hit{background:linear-gradient(180deg,#fff2a8,#ffd24a);box-shadow:0 0 22px #ffd24a,inset 0 0 0 3px #fff}
+.slot span.bad{background:linear-gradient(180deg,#8a8f99,#5a5f69);filter:grayscale(1)}
+.smb{font:13px system-ui,sans-serif;color:#ffe3e3;margin-top:9px}
+.lever{position:absolute;right:-24px;top:26px;width:12px;height:72px;background:linear-gradient(90deg,#888,#f2f2f2,#888);border-radius:6px;transform-origin:50% 100%}
+.lever i{position:absolute;top:-16px;left:-9px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ff8a8a,#b3121a 70%);box-shadow:0 3px 6px rgba(0,0,0,.4)}
+.lever.pull{animation:pull .6s ease-in-out}@keyframes pull{45%{transform:scaleY(-.55)}}
+.sm.win{animation:wig .09s 14 alternate;box-shadow:0 0 0 4px #4a0a0c,0 0 60px 12px rgba(255,210,74,.8)}@keyframes wig{from{transform:rotate(-2deg) scale(1.03)}to{transform:rotate(2deg) scale(1.06)}}
+.sm.lose{filter:grayscale(.9) brightness(.7);transform:rotate(-4deg) translateY(10px)}
+.bets{width:min(460px,100%)}.bets button small,#gk small{display:block;font:12px system-ui,sans-serif;opacity:.8;margin-top:2px}
+/* Effekt-Ebene */
+#fxo{position:fixed;inset:0;z-index:30;pointer-events:none;display:none;place-items:center;overflow:hidden}
+#fxo canvas{position:absolute;inset:0;width:100%;height:100%}
+#fxo .fl{position:absolute;inset:0;background:#fff;animation:fla .7s ease-out forwards}@keyframes fla{to{opacity:0}}
+#fxo .rays{position:absolute;left:50%;top:50%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;background:repeating-conic-gradient(rgba(255,210,74,.32) 0 9deg,transparent 9deg 18deg);-webkit-mask:radial-gradient(circle,#000 8%,transparent 55%);mask:radial-gradient(circle,#000 8%,transparent 55%);animation:spin 7s linear infinite,fin .6s ease-out}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes fin{from{opacity:0}}
+#fxo .big{position:relative;font-size:clamp(44px,12.5vw,108px);line-height:.95;text-align:center;padding:0 10px}
+#fxo .big .num{display:block;font-size:.5em;margin-top:8px}
+#fxo .big.w{color:#fff7c8;text-shadow:0 5px 0 #b8541b,0 10px 0 #5e2109,0 0 40px rgba(255,190,50,.9);animation:boom .85s cubic-bezier(.2,1.6,.3,1) both,glw 1s .85s ease-in-out infinite alternate}
+@keyframes boom{from{transform:scale(5) rotate(-14deg);opacity:0}to{transform:none;opacity:1}}@keyframes glw{to{transform:scale(1.06)}}
+#fxo .big.l{color:#a9bcd8;text-shadow:0 4px 0 #1b2638,0 0 30px rgba(0,0,0,.6);animation:droop 3.4s ease-in both}
+#fxo .big.l .cry{display:block;font-size:.9em;animation:sink 3.4s ease-in both}
+@keyframes droop{0%{transform:translateY(-40px);opacity:0}15%{transform:none;opacity:1}100%{transform:translateY(50px) rotate(5deg) scale(.92);opacity:.85}}
+@keyframes sink{0%,30%{transform:none}50%{transform:translateY(6px) rotate(-6deg)}70%{transform:translateY(12px) rotate(6deg)}100%{transform:translateY(26px)}}
+#end,#gc{transition:filter 1.2s}body.sad #end,body.sad #gc{filter:grayscale(1) brightness(.6)}
+.shk{animation:shk .55s}@keyframes shk{20%{transform:translate(-10px,5px)}40%{transform:translate(9px,-7px)}60%{transform:translate(-6px,6px)}80%{transform:translate(5px,-4px)}}
 @keyframes pop{from{transform:translateY(60px) scale(.6);opacity:0}to{transform:none;opacity:1}}
 .tabs{display:grid;gap:6px;width:min(460px,100%)}.tabs button{font-size:15px;padding:10px 4px}
 @media (min-width:900px) and (min-height:560px){#menu{display:grid;grid-template-columns:minmax(0,400px) minmax(0,500px);grid-template-rows:auto auto auto 1fr auto;justify-content:center;align-content:safe center;column-gap:16px;row-gap:12px}
@@ -108,6 +143,7 @@ ol{margin:0;padding:0;list-style:none;font-size:19px;line-height:1.6}
 <div class="ov" id="end" style="display:none"></div>
 <div class="ov" id="lb" style="display:none"></div>
 <div class="ov" id="how" style="display:none"></div>
+<div id="fxo"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (()=>{
@@ -118,7 +154,7 @@ const CH=[{n:'Lukas',c:0xf472b6,k:'lukas'},{n:'Linus',c:0x2a2a32,t:0xcbd5e1,k:'l
 const $=id=>document.getElementById(id),hx=c=>'#'+c.toString(16).padStart(6,'0');
 const sc=new THREE.Scene();sc.background=new THREE.Color(0x9ed3f0);sc.fog=new THREE.Fog(0x9ed3f0,90,260);
 const cam=new THREE.PerspectiveCamera(55,1,.1,400),rd=new THREE.WebGLRenderer({antialias:true});
-rd.setPixelRatio(Math.min(devicePixelRatio,2));document.body.prepend(rd.domElement);
+rd.setPixelRatio(Math.min(devicePixelRatio,2));rd.domElement.id='gc';document.body.prepend(rd.domElement);
 function rs(){rd.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
 addEventListener('resize',rs);rs();
 const hemi=new THREE.HemisphereLight(0xffffff,0x4a6b3a,.95);sc.add(hemi);
@@ -175,13 +211,40 @@ const SFX=(()=>{let A=null,on=LS.g('rr_snd')!=='0',combo=0,lastP=0;
   cd(go){tn(go?880:440,0,go?.45:.15,'square',.08)},
   ab(){tn(300,0,.35,'sawtooth',.06,1200);tn(600,.05,.3,'triangle',.08,1800)},
   end(){[784,659,523,392].forEach((x,i)=>tn(x,i*.13,.32,'triangle',.11))},
-  win(){[523,659,784,1047,784,1047,1319].forEach((x,i)=>tn(x,i*.1,.3,'triangle',.12))}}})();
+  win(){[523,659,784,1047,784,1047,1319].forEach((x,i)=>tn(x,i*.1,.3,'triangle',.12))},
+  tick(){tn(1500,0,.03,'square',.03)},
+  stop(){tn(180,0,.12,'square',.07,90);nz(0,.06,.3,1800)},
+  lever(){nz(0,.18,.45,400);tn(160,0,.25,'square',.07,70)},
+  drum(d){const a=ctx();if(!a)return;for(let i=0;i<d*14;i++)nz(i/14,.05,.25+.25*i/(d*14),220)},
+  jack(){nz(0,.5,.7,2500);[523,659,784,1047].forEach((x,i)=>{tn(x,i*.09,.5,'square',.06);tn(x*2,i*.09,.4,'triangle',.07)});[1047,1319,1568,2093].forEach((x,i)=>tn(x,.45+i*.07,.6,'triangle',.1));
+   for(let i=0;i<16;i++)tn(1800+Math.random()*1800,.8+i*.09,.12,'sine',.05)},
+  sad(){const a=ctx();if(!a)return;[[392,0,.45],[370,.5,.45],[349,1,.45],[330,1.5,1.4]].forEach(([f,t0,d],i)=>{const t=a.currentTime+t0,o=a.createOscillator(),g=a.createGain(),fl=a.createBiquadFilter();o.type='sawtooth';o.frequency.setValueAtTime(f,t);
+    if(i===3){const l=a.createOscillator(),lg=a.createGain();l.frequency.value=6;lg.gain.value=9;l.connect(lg);lg.connect(o.frequency);l.start(t);l.stop(t+d);o.frequency.linearRampToValueAtTime(f*.92,t+d)}
+    fl.type='lowpass';fl.frequency.value=900;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.12,t+.05);g.gain.setValueAtTime(.12,t+d-.12);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(fl);fl.connect(g);g.connect(a.destination);o.start(t);o.stop(t+d+.05)})}}})();
 let shake=0;function ouch(){SFX.hit();shake=.45;const h=$('hit');h.style.transition='none';h.style.opacity=1;requestAnimationFrame(()=>requestAnimationFrame(()=>{h.style.transition='opacity .55s';h.style.opacity=0}))}
 let cdT=0,cdL=0,roundT0=0,fpsA=0,fpsN=0,fpsDone=false;
 function showCD(s){const e=$('cd');e.style.display='grid';e.innerHTML=`<span>${s}</span>`}
 // Wenn es ruckelt: Grafik automatisch eine Stufe runter (einmal pro Runde pruefen)
 function fpsChk(raw){if(fpsDone||GQ===0)return;fpsA+=raw;fpsN++;if(fpsA>=5){fpsDone=true;if(fpsN/fpsA<34){GQ--;LS.s('rr_gq',GQ);applyGQ();gfxBtn();toast('Grafik automatisch auf „'+GQN[GQ]+'“ gestellt',1800)}}}
 function gfxBtn(){const b=$('gfx');if(b)b.textContent='✨ '+GQN[GQ]}
+
+// ===== Spielautomat: Effekt-Ebene (Konfetti, Muenzen, Regen) =====
+const FXP=(()=>{let cv=null,cx=null,ps=[],raf=0,rainTo=0;
+ const C=['#ffd24a','#ff4fa3','#4de3ff','#7be07b','#ff7a1a','#ffffff','#b36be0'];
+ function init(){cv=$('fxc');if(!cv)return;const k=devicePixelRatio>1?1.5:1;cv.width=innerWidth*k;cv.height=innerHeight*k;cx=cv.getContext('2d');cx.setTransform(k,0,0,k,0,0);if(!raf)raf=requestAnimationFrame(tick)}
+ function tick(){raf=0;if(!cv||!cv.isConnected){ps=[];return}cx.clearRect(0,0,innerWidth,innerHeight);const now=performance.now();
+  if(now<rainTo)for(let i=0;i<6;i++)ps.push({k:'r',x:Math.random()*innerWidth*1.2-innerWidth*.1,y:-20,vx:-1.2,vy:16+Math.random()*8,t:99});
+  for(let i=ps.length-1;i>=0;i--){const p=ps[i];p.x+=p.vx;p.y+=p.vy;p.t--;
+   if(p.k==='c'){p.vy+=.22;p.vx*=.985;p.vy*=.985;p.r+=p.vr;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.scale(1,Math.cos(p.t*.25));cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()}
+   else if(p.k==='e'){p.vy+=.12;p.r+=p.vr;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.font=p.s+'px sans-serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(p.e,0,0);cx.restore()}
+   else if(p.k==='r'){cx.strokeStyle='rgba(160,190,230,.55)';cx.lineWidth=1.6;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(p.x+p.vx*1.6,p.y+p.vy*1.6);cx.stroke()}
+   if(p.y>innerHeight+60||p.t<=0)ps.splice(i,1)}
+  if(ps.length||now<rainTo)raf=requestAnimationFrame(tick)}
+ return{init,
+  burst(x,y,n){for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,v=6+Math.random()*16;ps.push({k:'c',x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-7,w:7+Math.random()*7,h:10+Math.random()*9,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:C[i%C.length],t:220+Math.random()*80})}init()},
+  coins(n){for(let i=0;i<n;i++)ps.push({k:'e',e:['💰','🪙','⭐','🍺','🔥'][i%5],s:26+Math.random()*22,x:Math.random()*innerWidth,y:-40-Math.random()*innerHeight*1.2,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,r:0,vr:(Math.random()-.5)*.15,t:600});init()},
+  rain(ms){rainTo=performance.now()+ms;init()},
+  stop(){ps=[];rainTo=0}}})();
 
 const M=c=>new THREE.MeshLambertMaterial({color:c});let TGT=sc;
 const bx=(w,h,d,c,x,y,z,p=TGT)=>{const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(c));m.position.set(x,y,z);p.add(m);return m};
@@ -400,7 +463,7 @@ const fe=mapBegin('festival',{name:'Festival',icon:'🎪',sub:'Konzerte, Zelte, 
  const dropTmp=()=>{IT.filter(o=>o.tmp).forEach(o=>{sc.remove(o.g);IT.splice(IT.indexOf(o),1)})};
  const setSky=()=>{tmpC.setHex(FS.act==='weed'?0x8fae86:MAP.sky).lerp(DARK,FS.dark);sc.background.copy(tmpC);sc.fog.color.copy(tmpC);hemi.intensity=MAP.hi*HQK*(1-.4*FS.dark)};
  const startAct=s=>{s.on=true;FS.act=s.k;const a=ART[s.k];PERF[s.k].g.visible=true;drawScr(a.e+' '+a.n.toUpperCase()+' '+a.e,'LIVE',a.bg);toast(`🎤 ${a.n}! ${a.d}`,3200);
-  P.forEach(p=>p.fl=Math.random()<.6);
+  P.forEach(p=>p.fol=Math.random()<.6);
   if(s.k==='selfyy')for(let i=0;i<3;i++){const m=addT(new THREE.Mesh(new THREE.CircleGeometry(3.5,28).rotateX(-Math.PI/2),BM(0xfff3b0,.35)));m.position.y=.09;
    const bm=addT(new THREE.Mesh(new THREE.CylinderGeometry(3.4,3.4,40,20,1,true),BM(0xfff3b0,.07)));FS.spots.push({x:0,z:0,m,bm,i})}
   if(s.k==='selfyy')FS.flT=3;
@@ -441,7 +504,7 @@ const fe=mapBegin('festival',{name:'Festival',icon:'🎪',sub:'Konzerte, Zelte, 
   else{lose(p,3);p.stun=1.2;m='😡 Ein Camper wacht auf! -3';t.s=emo('😡',1.4,0);t.s.position.set(t.x,3.2,t.z);sc.add(t.s);setTimeout(()=>sc.remove(t.s),1500)}lvl(p);if(p===me)toast(m,1500)}})};
  fe.spd=p=>(MAP.weed?.8:1)*(FS.act==='evina'&&!p.bat&&!p.ghost&&inFront(p.x,p.z)?.6:1);
  fe.botTgt=p=>{let b=null,bd;
-  if(FS.act==='selfyy'&&p.fl){bd=18;FS.spots.forEach(s=>{const d=Math.hypot(s.x-p.x,s.z-p.z);if(d<bd){bd=d;b=s}});if(b)return b}
+  if(FS.act==='selfyy'&&p.fol){bd=18;FS.spots.forEach(s=>{const d=Math.hypot(s.x-p.x,s.z-p.z);if(d<bd){bd=d;b=s}});if(b)return b}
   if(zo&&p.camp){bd=26;FS.tents.forEach(t=>{const d=Math.hypot(t.x-p.x,t.z-p.z);if(t.loot&&d<bd){bd=d;b=t}});if(b)return b}
   if(FS.hh&&p.hhb)return BAR;return null};
  fe.flee=p=>{const w=FS.warn.find(w=>Math.hypot(p.x-w.x,p.z-w.z)<3.4);return w?[p.x-w.x||.1,p.z-w.z]:null};
@@ -957,17 +1020,36 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 function list(r){const med=['🥇','🥈','🥉','4.'];return`<ol class="rk">${r.map((p,i)=>`<li class="${p===me?'me':''}"><span class="p">${med[i]}</span><span class="n" style="color:${hx(p.ch.t||p.ch.c)}">${p.ch.n}${p===me?' ('+esc(uname)+')':''}<small style="color:#fff">🍺${p.beer} 🚬${p.joint} ❄️${p.koks}${p.sj?' 🔥'+p.sj:''}${p.fame?' ⭐'+p.fame:''}</small></span><span class="v">${pts(p)}</span></li>`).join('')}</ol>`}
 function finish(){st='end';SFX.end();$('cd').style.display='none';if(MAP.reset)MAP.reset();$('ab').style.display='none';P.forEach(p=>{if(p.at>0){p.at=0;endAb(p)}});if(stu){sc.remove(stu.g);stu=null}if(gb){sc.remove(gb.g);gb=null}$('hud').style.display='none';jv={x:0,y:0};
  const can=pts(me)>0;
- $('end').innerHTML=`<h1>Runde vorbei!</h1>${list(rank())}${can?'<p>Ein Spielautomat taucht auf! Hebel ziehen: 50 % verdoppelt er deine Items, 50 % sind alle weg.</p><div class="slot"><span>🎰</span><span>🎰</span><span>🎰</span></div><button id="gd">Hebel ziehen</button>':''}<button id="gk" style="--c:#cbd5e1">${can?'Behalten':'Weiter'}</button>`;
- $('end').style.display='flex';if($('gd'))$('gd').onclick=()=>settle(true);$('gk').onclick=()=>settle(false)}
+ $('end').innerHTML=`<h1>Runde vorbei!</h1>${list(rank())}${can?`<div class="sm" id="sm"><div class="smt">🎰 RAUSCH-AUTOMAT 🎰</div><div class="slot"><span>🍺</span><span>🔥</span><span>💰</span></div><div class="smb">Einsatz: deine ${pts(me)} Punkte</div><div class="lever" id="lev"><i></i></div></div><div class="g bets" style="grid-template-columns:1fr 1fr"><button id="gh" style="--c:#7be07b">🎲 Halbes Risiko<small>×1,5 oder ×0,5</small></button><button id="gd" style="--c:#ff5a4a">🔥 Alles riskieren<small>×2 oder alles weg</small></button></div>`:''}<button id="gk" style="--c:#d9dee6">${can?'Behalten<small>sicher '+pts(me)+' Punkte</small>':'Weiter'}</button>`;
+ $('end').style.display='flex';if($('gd')){$('gd').onclick=()=>settle('all');$('gh').onclick=()=>settle('half')}$('gk').onclick=()=>settle(false)}
 function show(msg){const r=rank(),top=r[0],sc0=pts(me),pk='rr_pb_'+rmap,pb=parseInt(ls.get(pk),10)||0,rec=sc0>pb;if(rec)ls.set(pk,sc0);if(top===me)SFX.win();
  $('end').innerHTML=`<h1>${top===me?'🏆 Du hast gewonnen!':top.ch.n+' gewinnt!'}</h1>${rec&&sc0>0?`<p style="color:#ffd24a">⭐ Neuer persönlicher Rekord: ${sc0} Punkte</p>`:''}${msg?`<p>${msg}</p>`:''}${list(r)}<p id="lbst" style="font-size:13px;opacity:.8"></p><button id="lbe" style="--c:#d9dee6">🏆 Leaderboard</button><button id="again">Nochmal spielen</button>`;
  if(!subm){subm=true;$('lbst').textContent='Wird im Leaderboard gespeichert …';lbSubmit(uname,sc0,rmap).then(x=>{const e=$('lbst');if(e)e.textContent=x.ok?(x.pub?'✅ Im Leaderboard gespeichert':'Auf diesem Gerät gespeichert (Server nicht erreichbar)'):'⚠️ Nicht gespeichert: '+x.why})}
- $('lbe').onclick=()=>openLb(null,rmap);$('again').onclick=()=>{$('end').style.display='none';$('menu').style.display='flex';st='menu'}}
-function settle(gm){if(!gm)return show('');
- const rl=$('end').querySelectorAll('.slot span'),S=['🍺','🚬','❄️','💀','🔥','💰'],rn=()=>S[(Math.random()*S.length)|0],win=Math.random()<.5;
- let fin;if(win){const w=['💰','🍺','🔥'][(Math.random()*3)|0];fin=[w,w,w]}else fin=['💀','💀',['🍺','🚬','❄️','🔥','💰'][(Math.random()*5)|0]].sort(()=>Math.random()-.5);
- $('gd').disabled=$('gk').disabled=true;const t0=Date.now(),iv=setInterval(()=>{const e=Date.now()-t0;rl.forEach((r,i)=>{r.textContent=e>900+i*500?fin[i]:rn()})},80);
- setTimeout(()=>{clearInterval(iv);rl.forEach((r,i)=>r.textContent=fin[i]);setTimeout(()=>{['beer','joint','koks','sj','fame'].forEach(k=>me[k]=win?me[k]*2:0);show(win?'Verdoppelt! 🎉':'Alles verloren! 💀')},800)},2000)}
+ $('lbe').onclick=()=>openLb(null,rmap);$('again').onclick=()=>{fxEnd();$('end').style.display='none';$('menu').style.display='flex';st='menu'}}
+function settle(mode){if(!mode)return show('');
+ const sm=$('sm'),rl=[...sm.querySelectorAll('.slot span')],S=['🍺','🚬','❄️','💀','🔥','💰','⭐'],rn=()=>S[(Math.random()*S.length)|0],win=Math.random()<.5,from=pts(me);
+ let fin;if(win){const w=['💰','🍺','🔥','⭐'][(Math.random()*4)|0];fin=[w,w,w]}
+ else{const w=['💰','🍺','🔥','⭐'][(Math.random()*4)|0];fin=Math.random()<.55?[w,w,'💀']:['💀','💀',rn()].sort(()=>Math.random()-.5);if(fin.every(x=>x===fin[0]))fin[2]='💀'}
+ ['gd','gh','gk'].forEach(i=>{const b=$(i);if(b)b.disabled=true});SFX.unlock();SFX.lever();$('lev').classList.add('pull');sm.classList.add('spin');
+ // Walzen drehen, nacheinander stoppen; wenn die ersten zwei gleich sind: Trommelwirbel und laenger warten
+ const tease=fin[0]===fin[1],stopAt=[1100,1750,tease?3500:2450],t0=performance.now(),done=[0,0,0];
+ rl.forEach(r=>r.classList.add('spin'));if(tease)setTimeout(()=>SFX.drum(1.6),1800);
+ const iv=setInterval(()=>{const e=performance.now()-t0;SFX.tick();rl.forEach((r,i)=>{if(done[i])return;if(e>=stopAt[i]){done[i]=1;r.textContent=fin[i];r.classList.remove('spin');r.classList.add('stop');SFX.stop()}else r.textContent=rn()});
+  if(done.every(Boolean)){clearInterval(iv);sm.classList.remove('spin');setTimeout(()=>result(),350)}},70);
+ function result(){const m=mode==='all'?(win?2:0):(win?1.5:.5);['beer','joint','koks','sj','fame'].forEach(k=>me[k]=Math.round((me[k]||0)*m));const to=pts(me);
+  rl.forEach(r=>r.classList.add(win?'hit':'bad'));sm.classList.add(win?'win':'lose');jackpotFx(win,from,to,mode)}}
+// Krasse Gewinn-Animation / traurige Verlier-Animation
+let fxT=[];function fxEnd(){fxT.forEach(clearTimeout);fxT=[];FXP.stop();const o=$('fxo');o.style.display='none';o.innerHTML='';document.body.classList.remove('sad');$('end').classList.remove('shk')}
+function jackpotFx(win,from,to,mode){const o=$('fxo');o.style.display='grid';
+ const cnt=(a,b,ms)=>{const t0=performance.now(),f=()=>{const k=Math.min(1,(performance.now()-t0)/ms),e=$('fxn');if(!e)return;e.textContent=Math.round(a+(b-a)*(1-Math.pow(1-k,3)))+' Punkte';if(k<1)requestAnimationFrame(f)};f()};
+ if(win){o.innerHTML=`<canvas id="fxc"></canvas><div class="fl"></div><div class="rays"></div><div class="big w">${mode==='all'?'JACKPOT!':'GEWONNEN!'}<span class="num">${mode==='all'?'×2 VERDOPPELT':'×1,5'}</span><span class="num" id="fxn">${from} Punkte</span></div>`;
+  SFX.jack();$('end').classList.add('shk');FXP.burst(innerWidth/2,innerHeight*.42,240);FXP.coins(70);
+  fxT.push(setTimeout(()=>{FXP.burst(innerWidth*.2,innerHeight*.55,120);FXP.burst(innerWidth*.8,innerHeight*.55,120);SFX.win()},700));
+  fxT.push(setTimeout(()=>cnt(from,to,1300),500))}
+ else{o.innerHTML=`<canvas id="fxc"></canvas><div class="big l"><span class="cry">${mode==='all'?'😭':'😢'}</span>${mode==='all'?'ALLES WEG …':'HALBIERT …'}<span class="num" id="fxn">${from} Punkte</span></div>`;
+  SFX.sad();document.body.classList.add('sad');FXP.rain(3800);fxT.push(setTimeout(()=>cnt(from,to,1600),700))}
+ fxT.push(setTimeout(()=>{show(win?`🎉 ${mode==='all'?'Verdoppelt':'Gewonnen'}! ${from} → ${to} Punkte`:`💀 ${mode==='all'?'Alles verloren':'Halbiert'}! ${from} → ${to} Punkte`);const b=o.querySelector('.big'),r=o.querySelector('.rays');if(b)b.remove();if(r)r.remove();
+  fxT.push(setTimeout(()=>{document.body.classList.remove('sad')},1200));fxT.push(setTimeout(fxEnd,win?3500:2200))},3400))}
 // Benutzername und Leaderboard
 // Schutz gegen gefaelschte Eintraege:
 //  1. Firebase-Regeln (database.rules.json) pruefen jeden Eintrag auf dem Server: hoechstens LB_CAP Punkte pro Runde, im Schnitt hoechstens LB_AVG,
