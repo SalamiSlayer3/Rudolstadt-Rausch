@@ -944,7 +944,7 @@ function dirOf(p){let dx,dz;
  if(p.bot){const fv=P.find(q=>q.fem&&q!==p&&Math.hypot(q.x-p.x,q.z-p.z)<12),tg0=fv||(!MAP.nav&&p.det)||p.tgt,tg=MAP.nav?MAP.nav(p,tg0):tg0;dx=tg.x-p.x;dz=tg.z-p.z;if(!p.bat)[stu&&stu.on&&stu,!p.bold&&gb,pol&&pol.tg===p&&pol].forEach(u=>{if(u){const d=Math.hypot(p.x-u.x,p.z-u.z);if(d<(u===stu?7:u===pol?9:6)&&(!MAP.same||MAP.same(p,u))){const ax=p.x-u.x,az=p.z-u.z,al=Math.hypot(ax,az)||1,tl=Math.hypot(dx,dz)||1;dx=ax/al+.45*dx/tl;dz=az/al+.45*dz/tl}}});if(MAP.flee){const f=MAP.flee(p);if(f){dx=f[0];dz=f[1]}}}
  else{dx=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0)+jv.x;dz=(keys.s||keys.arrowdown?1:0)-(keys.w||keys.arrowup?1:0)+jv.y}
  const l=Math.hypot(dx,dz);if(l<.05)return[0,0];const k=p.bot||l>1?1/l:1;return[dx*k,dz*k]}
-const AB={tim:{n:'Die Rolle',d:15,t:'doppelt so schnell'},lukas:{n:'DJ Set',d:10,t:'deine Crowd sammelt für dich'},bruno:{n:'Bierbaron',d:14,t:'Bier zählt doppelt und fliegt dir zu'},linus:{n:'Graf der Dunkelheit',d:7,t:'tippe aufs Feld zum Teleportieren'},ralph:{n:'Brasilianischer Tanz',d:10,t:'deine Tänzerinnen sammeln für dich'},til:{n:'Laserauge',d:4,t:'der Laser sammelt alles vor dir'},colin:{n:'Admin Modus',d:8,t:'alle eingefroren, Items gespawnt, du gehst durch Wände'},robert:{n:'Kiffung',d:14,t:'Joints zählen doppelt und fliegen dir zu'},tiller:{n:'Femboy Modus',d:12,t:'alle in der Nähe werden langsam und schenken dir Items'},paul:{n:'Feet Sniffer',d:4.4,t:'schnappt sich einen zufälligen Gegner, zieht ihm die Schuhe aus, riecht an seinen Füßen und klaut ihm die Hälfte seiner Punkte'}};
+const AB={tim:{n:'Die Rolle',d:15,t:'doppelt so schnell'},lukas:{n:'DJ Set',d:10,t:'deine Crowd sammelt für dich'},bruno:{n:'Bierbaron',d:14,t:'Bier zählt doppelt und fliegt dir zu'},linus:{n:'Graf der Dunkelheit',d:7,t:'tippe aufs Feld zum Teleportieren'},ralph:{n:'Brasilianischer Tanz',d:10,t:'deine Tänzerinnen sammeln für dich'},til:{n:'Laserauge',d:4,t:'der Laser sammelt alles vor dir'},colin:{n:'Admin Modus',d:8,t:'alle eingefroren, Items gespawnt, du gehst durch Wände'},robert:{n:'Kiffung',d:14,t:'Joints zählen doppelt und fliegen dir zu'},tiller:{n:'Femboy Modus',d:12,t:'alle in der Nähe werden langsam und schenken dir Items'},paul:{n:'Feet Sniffer',d:4.4,t:'schnappt sich einen zufälligen Gegner, zieht ihm die Schuhe aus, riecht an seinen Füßen und klaut ihm die Hälfte seiner Punkte (nur in den ersten 20 Sekunden)'}};
 const rc=new THREE.Raycaster(),pl=new THREE.Plane(new THREE.Vector3(0,1,0),0);
 const BND=()=>MAP.bnd?MAP.bnd():[zo?-49:-34,ev?49:34,-34,34];
 function tp(p,x,z){if(MAP.nogo(x,z,p))return;const B=BND();p.x=Math.max(B[0],Math.min(B[1],x));p.z=Math.max(B[2],Math.min(B[3],z))}
@@ -985,7 +985,7 @@ function crowd(x0,z0,cols,sp,fem){return cols.map(c=>{const m=new THREE.Group(),
  const x=x0+(Math.random()-.5)*(fem?2:5),z=z0+(Math.random()-.5)*(fem?2:5);m.position.set(x,MAP.fy?MAP.fy(crowdFl):0,z);sc.add(m);return{m,x,z,tgt:null,rt:0,sp,fl:crowdFl}})}
 function endAb(p){p.roll=p.dbl=p.dblj=p.bat=p.ghost=p.laser=p.fem=false;if(p.alt){p.g.remove(p.alt);p.alt=null}p.g.children[0].visible=true;if(p.bg){sc.remove(p.bg);p.bg=null}p.crowd.forEach(c=>sc.remove(c.m));p.crowd=[];
  if(p.ch.k==='tiller')P.forEach(q=>{if(q.heart){q.g.remove(q.heart);q.heart=null}})}
-let crowdFl=0;function ab(p){if(p.used||st!=='play'||cdT>0)return;if(me&&(p.fl||0)===(me.fl||0))burst(p.x,1.6+(MAP.fy?MAP.fy(p.fl):0),p.z,p.ch.t||p.ch.c,14,5);if(p===me)SFX.ab();if(p===me&&p.ch.k==='tim')shake=1.1;crowdFl=p.fl||0;p.used=true;const k=p.ch.k,a=AB[k];p.at=a.d;
+let crowdFl=0;function ab(p){if(p.used||st!=='play'||cdT>0)return;if(p.ch.k==='paul'&&60-T>20){if(p===me)toast('🦶 Feet Sniffer geht nur in den ersten 20 Sekunden!',1500);return}if(me&&(p.fl||0)===(me.fl||0))burst(p.x,1.6+(MAP.fy?MAP.fy(p.fl):0),p.z,p.ch.t||p.ch.c,14,5);if(p===me)SFX.ab();if(p===me&&p.ch.k==='tim')shake=1.1;crowdFl=p.fl||0;p.used=true;const k=p.ch.k,a=AB[k];p.at=a.d;
  if(k==='tim')p.roll=true;if(k==='bruno')p.dbl=true;if(k==='robert')p.dblj=true;if(k==='linus'){p.bat=true;p.tpT=0}
  if(k==='colin'){p.ghost=true;P.forEach(q=>{if(q!==p&&!q.bat){q.stun=3;if(!q.ice){q.ice=emo('🧊',1.2,4.4);q.g.add(q.ice)}}});for(let i=0;i<7;i++){item(true);const o=IT[IT.length-1],a=i/7*Math.PI*2;let nx=p.x+Math.cos(a)*3,nz=p.z+Math.sin(a)*3;let nf=p.fl||0;if(MAP.ok){if(!MAP.ok(nx,nz,nf))[nx,nz,nf]=spawn(false)}else{nx=Math.max(-34,Math.min(34,nx));nz=Math.max(-34,Math.min(34,nz))}o.x=nx;o.z=nz;o.fl=nf||0;o.g.position.set(o.x,1,o.z)}}if(k==='til')p.laser=true;
  if(k==='paul')snStart(p);if(k==='tiller'){p.fem=true;P.forEach(q=>{if(q!==p){q.heart=emo('😍',1.1,4.4);q.g.add(q.heart)}})}
@@ -1047,7 +1047,7 @@ function botPick(p){let b=1e9,r=null;const pf=p.fl||0,gbOpen=!gb||gb.stun>0||Mat
   const v=o.k==='super'?6:o.k==='koks'?2:o.k==='rose'||o.k==='pass'?3:(o.k==='beer'&&p.dbl)||(o.k==='joint'&&(p.dblj||MAP.weed))?2:1;
   const s=d/(v*(1+.22*Math.min(c,6)))+Math.random()*.5;if(s<b){b=s;r=o}}
  return r||{x:p.x,z:p.z,fl:p.fl}}
-function botAb(p){const k=p.ch.k,el=60-T;if(el<4)return false;if(T<=14)return true;const pf=p.fl||0;
+function botAb(p){const k=p.ch.k,el=60-T;if(k==='paul'&&el>20)return false;if(el<4)return false;if(T<=14)return true;const pf=p.fl||0;
  const cnt=(rad,f)=>{let n=0;for(const o of IT)if((o.fl||0)===pf&&o.k!=='super'&&o.k!=='pass'&&(!f||f(o))&&Math.hypot(o.x-p.x,o.z-p.z)<rad)n++;return n};
  const opp=rad=>P.filter(q=>q!==p&&!q.bat&&(q.fl||0)===pf&&Math.hypot(q.x-p.x,q.z-p.z)<rad).length;
  const chased=stu&&stu.on&&(stu.fl||0)===pf&&Math.hypot(stu.x-p.x,stu.z-p.z)<7,fresh=ev&&evAt>=0&&el-evAt<7;
@@ -1060,7 +1060,7 @@ function botAb(p){const k=p.ch.k,el=60-T;if(el<4)return false;if(T<=14)return tr
   case'til':{const l=Math.hypot(p.dx,p.dz)||1,ux=p.dx/l,uz=p.dz/l;let n=0;for(const o of IT){if(o.k==='super'||o.k==='pass'||(o.fl||0)!==pf)continue;const rx=o.x-p.x,rz=o.z-p.z,a=rx*ux+rz*uz;if(a>0&&a<22&&Math.abs(ux*rz-uz*rx)<1.1)n++}return n>=3}
   case'colin':return opp(12)>=2||chased||(el>30&&opp(14)>=1);
   case'tiller':return opp(10)>=2||(el>28&&opp(9)>=1);
-  case'paul':return P.filter(q=>q!==p&&!q.bat&&!q.ghost).some(q=>pts(q)>=12)||el>34}
+  case'paul':return P.filter(q=>q!==p&&!q.bat&&!q.ghost).some(q=>pts(q)>=14)||el>=17}
  return el>=p.ba}
 function unstick(p,dt){if(p.det){p.det.t-=dt;if(p.det.t<=0)p.det=null}p.skT=(p.skT||0)+dt;if(p.skT<.6)return;p.skT=0;
  if(p.skP&&!(p.stun>0)&&!p.det&&Math.hypot(p.x-p.skP[0],p.z-p.skP[1])<.9&&p.tgt&&Math.hypot(p.tgt.x-p.x,p.tgt.z-p.z)>1.6){const a=Math.atan2(p.tgt.z-p.z,p.tgt.x-p.x)+(Math.random()<.5?1:-1)*(1.3+Math.random()*.5);p.det={x:p.x+Math.cos(a)*6,z:p.z+Math.sin(a)*6,t:.75}}
@@ -1128,7 +1128,7 @@ function snStep(dt){if(!SN.on)return;const S=SN,p=S.p,v=S.v;if(!P.includes(p)||!
 function snCam(dt,my){if(!SN.on||!(SN.p===me||SN.v===me))return false;const S=SN,cx=(S.p.x+S.v.x)/2,cz=(S.p.z+S.v.z)/2,px=Math.cos(S.a),pz=-Math.sin(S.a),sd=pz>0?1:-1;
  cam.position.lerp(new THREE.Vector3(cx+px*5.2*sd,my+3.6,cz+pz*5.2*sd+1.5),Math.min(1,dt*4));cam.lookAt(cx,my+.9,cz);return true}
 function pts(p){return p.beer+p.joint+2*p.koks+10*p.sj+(p.fame||0)}
-function hud(){const a=AB[me.ch.k],bt=$('ab');bt.textContent=me.at>0?`${a.n} ${Math.ceil(me.at)}s`:me.used?`${a.n} ✓`:`⚡ ${a.n}`;bt.disabled=me.used;bt.classList.toggle('rd',!me.used&&!(cdT>0));bt.style.setProperty('--c',hx(me.ch.t||me.ch.c));
+function hud(){const a=AB[me.ch.k],bt=$('ab');bt.textContent=me.at>0?`${a.n} ${Math.ceil(me.at)}s`:me.used?`${a.n} ✓`:`⚡ ${a.n}`;bt.disabled=me.used;bt.classList.toggle('rd',!me.used&&!(cdT>0));if(me.ch.k==='paul'&&!me.used){const left=Math.ceil(20-(60-T));if(left<=0){bt.textContent='Feet Sniffer vorbei';bt.disabled=true;bt.classList.remove('rd')}else bt.textContent=`⚡ Feet Sniffer (${Math.min(20,left)}s)`}bt.style.setProperty('--c',hx(me.ch.t||me.ch.c));
  const pr=(me.xp%5)/5*100,mx=Math.max(...P.map(pts)),nx=MAP.info?MAP.info():[!zo?`${MAP.wN} in ${Math.ceil(T-45)}s`:stu&&stu.on?`Stuart jagt ${Math.ceil(stu.t)}s`:'',ev?'':`${MAP.eN} in ${Math.ceil(T-30)}s`].filter(Boolean).join(', ');
  const H=$('hud');if(!H.firstChild||!H.querySelector('.tm'))H.innerHTML='<div class="hb"><div class="tm"></div><div class="mid"><div class="lv"><span></span><i class="bar"><u></u></i></div><div class="inv"></div></div></div><div class="nx"></div><div class="sb"></div>';
  const tt=Math.max(0,Math.ceil(T)),tm=H.querySelector('.tm');tm.textContent=tt;tm.classList.toggle('lo',tt<=10&&!(cdT>0));H.querySelector('.lv span').textContent='Lvl '+me.lv;H.querySelector('.bar u').style.width=pr+'%';
