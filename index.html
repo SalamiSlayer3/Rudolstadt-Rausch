@@ -195,7 +195,7 @@ function mapBegin(id,o){const g=new THREE.Group();g.visible=false;sc.add(g);TGT=
 function mapEnd(m,f,fw){m.F=f;m.FW=fw;TGT=sc}
 function setMap(id){if(!MAPS[id])id='markt';if(MAP){MAP.g.visible=false;sc.remove(F);sc.remove(FW)}MAP=MAPS[id];MAP.g.visible=true;CO=MAP.co;F=MAP.F;FW=MAP.FW;sc.add(F);sc.add(FW);
  sc.background.setHex(MAP.sky);sc.fog.color.setHex(MAP.sky);hemi.color.setHex(MAP.hc);hemi.intensity=MAP.hi;sun.intensity=.6;sc.fog.near=90;sc.fog.far=260;sun.color.setHex(MAP.sunc);lightK();
- IT.forEach(o=>{if(o.k==='super'||o.gar)return;[o.x,o.z,o.fl]=spawn(false);o.g.position.x=o.x;o.g.position.z=o.z})}
+ IT.forEach(o=>{o.g.visible=true;if(o.k==='super'||o.gar)return;[o.x,o.z,o.fl]=spawn(false);o.g.position.x=o.x;o.g.position.z=o.z})}
 const mk=mapBegin('markt',{name:'Marktplatz',icon:'⛲',sub:'Laden, ZOB, Saalgärten',sky:0x9ed3f0,hc:0xffffff,hi:.95,sunc:0xfff2d0,nogo:(x,z)=>Math.abs(x)<6.5&&z<-26,sj:[0,-32.4],gb:[0,-25.5],t0:'Superjoint im Laden im Norden, Onkel Gebbi passt auf!',tE:'Die Saalgärten sind offen!',tW:'Der ZOB ist offen! Stuart jagt euch!',wN:'ZOB',eN:'Saalgärten'});
 bx(160,1,160,0x5f9a4a,0,-.5,0);bx(80,.05,6,0x7a7a82,0,.02,0);bx(6,.05,80,0x7a7a82,0,.02,0);bx(16,.06,16,0xb7a98c,0,.04,0);bx(14,.05,200,0x3a8fd0,56,.03,0);
 function house(x,z,w,d,h,col,solid){bx(w,h,d,col,x,h/2,z);hip(w,d,h*.55,pick(ROOF),x,h+h*.275,z);
